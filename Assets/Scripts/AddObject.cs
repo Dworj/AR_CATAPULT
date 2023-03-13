@@ -6,12 +6,12 @@ using UnityEngine.UI;
 public class AddObject : MonoBehaviour
 {
     private Button button;
-    private ProgrammManager _programmManager;
+    private ProgrammManager ProgrammManagerScript;
     
     // Start is called before the first frame update
     void Start()
     {
-        _programmManager = FindObjectOfType<ProgrammManager>();
+        ProgrammManagerScript = FindObjectOfType<ProgrammManager>();
 
         button = GetComponent<Button>();
         button.onClick.AddListener(AddObjectFunction);
@@ -20,6 +20,6 @@ public class AddObject : MonoBehaviour
     // Update is called once per frame
     void AddObjectFunction()
     {
-        _programmManager.ScrollView.SetActive(true);
+        ProgrammManagerScript.ScrollView.SetActive(true);
     }
 }

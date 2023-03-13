@@ -1,123 +1,150 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 
 public class ProgrammManager : MonoBehaviour
 {
-    [Header("Put your planeMarker here")]
-
+    [Header("Put your PlaneMarker here")]
     [SerializeField] private GameObject PlaneMarkerPrefab;
-
-    private Vector2 TouchPosition;
-
-    [SerializeField] private Camera _arCamera;
-
-    private GameObject _selectedObject;
 
     private ARRaycastManager ARRaycastManagerScript;
 
-    private Quaternion _rotation;
+    List<ARRaycastHit> hits = new List<ARRaycastHit>();
+
+    public GameObject ObjectToSpawn;
+
+    private GameObject SelectedObject;
+
+    [Header("Put ScrollView here")]
+    public GameObject ScrollView;
+
+    public GameObject MaketShell;
+
+    private Vector2 TouchPosition;
+
+    [SerializeField] private Camera ARCamera;
+
+    private Quaternion YRotation;
 
     public bool ChooseObject = false;
 
-    public GameObject ScrollView;
-
     public bool Rotation;
 
-    public GameObject SpawnObject;
+    public bool Recharging;
 
-    List<ARRaycastHit> hits = new List<ARRaycastHit>();
-
-   
-   
     void Start()
     {
         ARRaycastManagerScript = FindObjectOfType<ARRaycastManager>();
-        ScrollView.SetActive(false);
-        PlaneMarkerPrefab.SetActive(false);
-    }
 
-    // Update is called once per frame
+        PlaneMarkerPrefab.SetActive(false);
+        ScrollView.SetActive(false);
+    }
+    
     void Update()
     {
         if (ChooseObject)
         {
-            ShowMarker_SetObject();
+            ShowMarkerAndSetObject();
         }
-        MoveObject_Rotation();
+
+        MoveAndRotateObject();
     }
 
-    void ShowMarker_SetObject()
+    void ShowMarkerAndSetObject()
     {
         List<ARRaycastHit> hits = new List<ARRaycastHit>();
-        // set marker
+
+        ARRaycastManagerScript.Raycast(new Vector2(Screen.width / 2, Screen.height / 2), hits, TrackableType.Planes);
+
+        // show marker
         if (hits.Count > 0)
         {
             PlaneMarkerPrefab.transform.position = hits[0].pose.position;
             PlaneMarkerPrefab.SetActive(true);
         }
-
-        // set  object
-        ARRaycastManagerScript.Raycast(new Vector2(Screen.width / 2, Screen.height / 2), hits, TrackableType.Planes);
+       // set object
         if (Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Began)
         {
-            Instantiate(SpawnObject, hits[0].pose.position, SpawnObject.transform.rotation);
+            Instantiate(ObjectToSpawn, hits[0].pose.position, ObjectToSpawn.transform.rotation);
             ChooseObject = false;
             PlaneMarkerPrefab.SetActive(false);
         }
     }
-    void MoveObject_Rotation()
+
+    void MoveAndRotateObject()
     {
-        if (Input.touchCount > 0)              // checking the screen touch check
-
+        if(Input.touchCount > 0)
         {
-            Touch touch = Input.touches[0];
+            Touch touch = Input.GetTouch(0);
             TouchPosition = touch.position;
-
-            if(touch.phase == TouchPhase.Began) // make Selected only of touch
+            
+            if (touch.phase == TouchPhase.Began)
             {
-                Ray ray = _arCamera.ScreenPointToRay(touch.position);// take the position of finger on screen
+                Ray ray = ARCamera.ScreenPointToRay(touch.position);
                 RaycastHit hitObject;
+
+                // Select choosed object
                 if (Physics.Raycast(ray, out hitObject))
-                {                                                           //if the intersected object
-                                                                            
-                    if (hitObject.collider.CompareTag("Unselected"))         // has a tag Unselected   
-                    {                                                      
-                        hitObject.collider.gameObject.tag = "Selected";     // then put tag Selected
+                {
+                    if (hitObject.collider.CompareTag("UnSelected"))
+                    {
+                        hitObject.collider.gameObject.tag = "Selected";
                     }
                 }
-        
-            
             }
-            _selectedObject = GameObject.FindWithTag("Selected");
 
-            if (touch.phase == TouchPhase.Moved && Input.touchCount == 1)
+            SelectedObject = GameObject.FindWithTag("Selected");
+
+            if (touch.phase == TouchPhase.Moved && Input.touchCount == 1 )
             {
                 if (Rotation)
                 {
-                    _rotation = Quaternion.Euler(0f, -touch.deltaPosition.x * 0.1f, 0f); //adding rotation with each swipe
-                    _selectedObject.transform.rotation = _rotation;
+                   // Rotate Object by 1 finger
+                    YRotation = Quaternion.Euler(0f, -touch.deltaPosition.x * 0.1f, 0f);
+                    SelectedObject.transform.rotation = YRotation * SelectedObject.transform.rotation;
                 }
                 else
                 {
-                    ARRaycastManagerScript.Raycast(TouchPosition, hits, TrackableType.Planes); // fix the points where the area intersects
-                    _selectedObject = GameObject.FindWithTag("Selected"); // if object heve tag Selected  we can move it 
-                }
-              
-            }
-
-            if(touch.phase == TouchPhase.Ended) // If the finger is removed from the screen
-            {                                               // If the finger is removed from the screen
-                if (_selectedObject.CompareTag("Selected")) // the tag Selected
-                {                                           //  changes to UnSelected  and it cannot be moved
-                    _selectedObject.tag = "UnSelected"; //  changes to UnSelected  and it cannot be moved
+                   // Move Object
+                    ARRaycastManagerScript.Raycast(TouchPosition, hits, TrackableType.Planes);
+                    SelectedObject.transform.position = hits[0].pose.position;
                 }
             }
+            //Rotate Objec by 2 fingers
+            if (Input.touchCount == 2)
+            {
+                Touch touch1 = Input.touches[0];
+                Touch touch2 = Input.touches[1];
 
+                if (touch1.phase == TouchPhase.Moved || touch2.phase == TouchPhase.Moved)
+                {
+                    float DistanceBetweenTouches = Vector2.Distance(touch1.position, touch2.position);
+                    float prevDistanceBetweenTouches = Vector2.Distance(touch1.position - touch1.deltaPosition, touch2.position - touch2.deltaPosition);
+                    float Delta = DistanceBetweenTouches - prevDistanceBetweenTouches;
+
+                    if (Mathf.Abs(Delta) > 0)
+                    {
+                        Delta *= 0.1f;
+                    }
+                    else
+                    {
+                        DistanceBetweenTouches = Delta = 0;
+                    }
+                    YRotation = Quaternion.Euler(0f, -touch1.deltaPosition.x * Delta, 0f);
+                    SelectedObject.transform.rotation = YRotation * SelectedObject.transform.rotation;
+                }
+
+            }
+            // Deselect object
+            if (touch.phase == TouchPhase.Ended)
+            {
+                if (SelectedObject.CompareTag("Selected"))
+                {
+                    SelectedObject.tag = "UnSelected";
+                }
+            }
         }
-
     }
 }

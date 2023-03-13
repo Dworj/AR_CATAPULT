@@ -1,34 +1,36 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class Rotation : MonoBehaviour
 {
-    private Button _button;
-    private ProgrammManager _programmManager;
+    private Button Button;
+    private ProgrammManager ProgrammManagerScript;
+
     // Start is called before the first frame update
     void Start()
     {
-        _programmManager = FindObjectOfType<ProgrammManager>();
-        _button = GetComponent<Button>();
-        _button.onClick.AddListener(RotateObject);
+        ProgrammManagerScript = FindObjectOfType<ProgrammManager>();
+
+        Button = GetComponent<Button>();
+        Button.onClick.AddListener(RotationFunction);
     }
 
     // Update is called once per frame
-    private void RotateObject()
+    void RotationFunction()
     {
-     if (_programmManager.Rotation)
+        if (ProgrammManagerScript.Rotation)
         {
-            _programmManager.Rotation = false;
-            GetComponent<Image>().color = Color.red; // if rotation disable button will be red
+            ProgrammManagerScript.Rotation = false;
+            GetComponent<Image>().color = Color.red;
         }
-
-     else 
-
+        else
         {
-           _programmManager.Rotation = true;
-            GetComponent<Image>().color = Color.green;  // if rotation active button will be red
+            ProgrammManagerScript.Rotation = true;
+            GetComponent<Image>().color = Color.green;
         }
-    } 
+    }
+
 }

@@ -1,26 +1,29 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ChooseObject : MonoBehaviour
 {
-    // Start is called before the first frame update
+    private ProgrammManager ProgrammManagerScript;
 
-    private ProgrammManager _programmManager;
-    private Button _button;
+    private Button button;
+
     public GameObject ChoosedObject;
+
     void Start()
     {
-        _programmManager = FindObjectOfType<ProgrammManager>();
-        _button = GetComponent<Button>();
-        _button.onClick.AddListener(SelectedObject);
+        ProgrammManagerScript = FindObjectOfType<ProgrammManager>();
+
+        button = GetComponent<Button>();
+        button.onClick.AddListener(ChooseObjectFunction);
+
     }
 
-  void SelectedObject()
+    void ChooseObjectFunction()
     {
-        _programmManager.SpawnObject = ChoosedObject;
-        _programmManager.ChooseObject = true;
-        _programmManager.ScrollView.SetActive(false);
+        ProgrammManagerScript.ObjectToSpawn = ChoosedObject;
+        ProgrammManagerScript.ChooseObject = true;
+        ProgrammManagerScript.ScrollView.SetActive(false);
     }
 }
