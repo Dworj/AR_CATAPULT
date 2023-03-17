@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
-
 public class Rotation : MonoBehaviour
 {
     private Button Button;
@@ -13,7 +11,6 @@ public class Rotation : MonoBehaviour
     void Start()
     {
         ProgrammManagerScript = FindObjectOfType<ProgrammManager>();
-
         Button = GetComponent<Button>();
         Button.onClick.AddListener(RotationFunction);
     }
@@ -32,5 +29,4 @@ public class Rotation : MonoBehaviour
             GetComponent<Image>().color = Color.green;
         }
     }
-
 }

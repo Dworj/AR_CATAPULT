@@ -1539,10 +1539,10 @@ RectTransform:
   m_Father: {fileID: 247391200}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.6844073, y: 0.013520834}
-  m_AnchorMax: {x: 0.92700005, y: 0.068}
-  m_AnchoredPosition: {x: -0.8999939, y: -0.5}
-  m_SizeDelta: {x: -101, y: -77}
+  m_AnchorMin: {x: 0.684, y: 0.011000001}
+  m_AnchorMax: {x: 0.92700005, y: 0.06647917}
+  m_AnchoredPosition: {x: -0.3999939, y: 0}
+  m_SizeDelta: {x: -102, y: -79}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &631410017
 MonoBehaviour:
@@ -2129,7 +2129,6 @@ MonoBehaviour:
   ObjectToSpawn: {fileID: 6543442097523641160, guid: fbb55e77b7dac6e4c9c157a1739e97b9,
     type: 3}
   ScrollView: {fileID: 1997275331}
-  MaketShell: {fileID: 0}
   ARCamera: {fileID: 1577749884}
   ChooseObject: 0
   Rotation: 0
@@ -2389,6 +2388,7 @@ GameObject:
   - component: {fileID: 1577749887}
   - component: {fileID: 1577749886}
   - component: {fileID: 1577749885}
+  - component: {fileID: 1577749889}
   m_Layer: 0
   m_Name: AR Camera
   m_TagString: MainCamera
@@ -2421,7 +2421,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 20
-  field of view: 60
+  field of view: 92.899925
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -2496,13 +2496,37 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1577749883}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1114040582}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!205 &1577749889
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1577749883}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
+  m_Size: 1
+  m_FadeMode: 2
+  m_AnimateCrossFading: 1
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.0017727768
+    fadeTransitionWidth: 0
+    renderers: []
+  - screenRelativeHeight: 0.0017727768
+    fadeTransitionWidth: 0
+    renderers: []
+  - screenRelativeHeight: 0.0017727768
+    fadeTransitionWidth: 0
+    renderers: []
+  m_Enabled: 1
 --- !u!1 &1599567408
 GameObject:
   m_ObjectHideFlags: 0

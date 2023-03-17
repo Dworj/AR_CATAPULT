@@ -6,7 +6,7 @@ using UnityEngine.XR.ARSubsystems;
 
 public class ProgrammManager : MonoBehaviour
 {
-    [Header("Put your PlaneMarker here")]
+   
     [SerializeField] private GameObject PlaneMarkerPrefab;
 
     private ARRaycastManager ARRaycastManagerScript;
@@ -17,10 +17,7 @@ public class ProgrammManager : MonoBehaviour
 
     private GameObject SelectedObject;
 
-    [Header("Put ScrollView here")]
     public GameObject ScrollView;
-
-    public GameObject MaketShell;
 
     private Vector2 TouchPosition;
 
@@ -109,31 +106,6 @@ public class ProgrammManager : MonoBehaviour
                     ARRaycastManagerScript.Raycast(TouchPosition, hits, TrackableType.Planes);
                     SelectedObject.transform.position = hits[0].pose.position;
                 }
-
-                /* //Rotate Objec by 2 fingers
-                 if (Input.touchCount == 2)
-                 {
-                     Touch touch1 = Input.touches[0];
-                     Touch touch2 = Input.touches[1];
-
-                     if (touch1.phase == TouchPhase.Moved || touch2.phase == TouchPhase.Moved)
-                     {
-                         float DistanceBetweenTouches = Vector2.Distance(touch1.position, touch2.position);
-                         float prevDistanceBetweenTouches = Vector2.Distance(touch1.position - touch1.deltaPosition, touch2.position - touch2.deltaPosition);
-                         float Delta = DistanceBetweenTouches - prevDistanceBetweenTouches;
-
-                         if (Mathf.Abs(Delta) > 0)
-                         {
-                             Delta *= 0.1f;
-                         }
-                         else
-                         {
-                             DistanceBetweenTouches = Delta = 0;
-                         }
-                         YRotation = Quaternion.Euler(0f, -touch1.deltaPosition.x * Delta, 0f);
-                         SelectedObject.transform.rotation = YRotation * SelectedObject.transform.rotation;
-                     }
-                */
 
             }
             // Deselect object

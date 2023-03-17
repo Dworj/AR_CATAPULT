@@ -361,6 +361,7 @@
 "Assets/Scripts/ExitButton.cs"
 "Assets/Scripts/ProgrammManager.cs"
 "Assets/Scripts/ProgrammManager1.cs"
+"Assets/Scripts/ProgrammManager3.cs"
 "Assets/Scripts/Quit.cs"
 "Assets/Scripts/Rotation.cs"
 "Assets/Scripts/Rotation2.cs"

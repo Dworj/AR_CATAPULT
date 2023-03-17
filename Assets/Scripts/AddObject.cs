@@ -12,7 +12,6 @@ public class AddObject : MonoBehaviour
     void Start()
     {
         ProgrammManagerScript = FindObjectOfType<ProgrammManager>();
-
         button = GetComponent<Button>();
         button.onClick.AddListener(AddObjectFunction);
     }

@@ -108,8 +108,6 @@ public class ProgrammManager1 : MonoBehaviour
                     }
                 }
             }
-        }
-        
+       }   
     }
-
 }
