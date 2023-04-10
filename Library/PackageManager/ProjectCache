@@ -5,7 +5,7 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 638143885775285376
+      ticks: 638158699547142340
     m_Hash: 1113367447
   m_LockFileStatus:
     m_FilePath: C:/Users/117/Documents/GitHub/AR_CATAPULT/Packages/packages-lock.json
@@ -13,7 +13,7 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 638143885775305316
+      ticks: 638158699547192202
     m_Hash: 1474509965
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
